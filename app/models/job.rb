@@ -32,4 +32,9 @@ class Job
     }
   end
 
+  def self.delete(id)
+    results = DB.exec("DELETE FROM jobs WHERE id=#{id;}")
+    return {"deleted" => true}
+  end
+
 end
