@@ -15,4 +15,21 @@ class Job
     end
   end
 
+  def self.create(opts)
+    results = DB.exec(
+      <<-SQL
+        INSERT INTO jobs (title, company, link, status)
+        VALUES ('#{opts["title"]}', '#{opts["company"]}', '#{opts["link"]}', '#{opts["status"]}')
+        RETURNING id, title, company, link, status;
+      SQL
+    )
+    return {
+      "id" => results.first["id"].to_i,
+      "title" => results.first["title"],
+      "company" => results.first["company"],
+      "link" => results.first["link"],
+      "status" => results.first["status"]
+    }
+  end
+
 end
