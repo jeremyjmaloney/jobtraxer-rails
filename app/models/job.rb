@@ -37,4 +37,22 @@ class Job
     return {"deleted" => true}
   end
 
+  def self.update(id, opts)
+    results = DB.exec(
+      <<-SQL
+        UPDATE jobs
+        SET status='#{opts["status"]}'
+        WHERE id=#{id}
+        RETURNING id, title, company, link, status
+      SQL
+    )
+    return {
+      "id" => results.first["id"].to_i,
+      "title" => results.first["title"],
+      "company" => results.first["company"],
+      "link" => results.first["link"],
+      "status" => results.first["status"]
+    }
+  end
+
 end
