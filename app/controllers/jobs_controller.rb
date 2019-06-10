@@ -1,6 +1,10 @@
 class JobsController < ApplicationController
   # skip_before_action :verify_authenticity_token
 
+  def all
+    render json: Job.all
+  end
+
   def show
     render json: Job.find(params["status"])
   end

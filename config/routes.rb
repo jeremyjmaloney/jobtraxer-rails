@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get '/jobs', to:'jobs#all'
+
   # get route with a specific status -"Applied/New/Interviewed"
   get '/jobs/:status', to:'jobs#show'
 
